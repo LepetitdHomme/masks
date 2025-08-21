@@ -3,12 +3,13 @@ extends Node2D
 @onready var sprite_2d = $Sprite2D
 @onready var shadow = $Sprite2D/shadow
 
-@export var owner_origin : String = "" # "P1"/"P2"
 @export var def : MaskDef # data
 var state_id : String = "" # instance runtime
+var ownr_origin : String = "" # "P1" / "P2" from state
 
 var mouse_in : bool = false
 var is_dragging : bool = false
+var draggable : bool = true # if mask played, can't be dragged anymore
 var current_goal_scale : Vector2 = Vector2(0.2,0.2)
 var scale_tween : Tween
 var last_pos : Vector2
@@ -24,10 +25,11 @@ var body_ref
 @onready var label_4 = $Labels/Label4
 
 func _ready():
+	EventBus.mask_drop_success.connect(_on_mask_played)
 	if def:
 		sprite_2d.texture = def.art_texture
 		shadow.texture = def.shadow_texture
-		sprite_2d.modulate = def.tint_color
+		#sprite_2d.modulate = def.tint_color
 
 func _process(delta):
 	drag_logic(delta)
@@ -41,9 +43,12 @@ func return_home() -> void:
 	home_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	home_tween.tween_property(self, "global_position", home_pos, 0.225)
 
-func bind(def_in : MaskDef, state_id_in : String) -> void:
+func bind(def_in : MaskDef, state_id_in : String, ownr) -> void:
 	def = def_in
 	state_id = state_id_in
+	ownr_origin = ownr
+	# TODO: temporary
+	#get_state().apply_bonus("right", 3)
 	_refresh_visual()
 	update_labels()
 
@@ -64,7 +69,7 @@ func _refresh_visual() -> void:
 	if def:
 		sprite_2d.texture = def.art_texture
 		shadow.texture = def.shadow_texture
-		sprite_2d.modulate = def.tint_color
+		#sprite_2d.modulate = def.tint_color
 
 func get_state() -> MaskState:
 	return MaskDB.get_state(state_id)
@@ -81,6 +86,8 @@ func get_vals() -> Dictionary:
 	}
 
 func drag_logic(delta: float) -> void:
+	if not draggable:
+		return
 	shadow.position = Vector2(-12, 12).rotated(sprite_2d.rotation)
 
 	# 1) Début du drag (edge)
@@ -106,7 +113,7 @@ func drag_logic(delta: float) -> void:
 
 		# Émettre l’event SEULEMENT si on est bien sur une Cell droppable
 		if is_inside_droppable and body_ref is Cell:
-			EventBus.mask_drop_attempt.emit(body_ref, self, state_id, owner_origin)
+			EventBus.mask_drop_attempt.emit(body_ref, self, state_id, ownr_origin)
 		else:
 			return_home()
 
@@ -145,14 +152,16 @@ func _on_area_2d_body_entered(body):
 	print("body entered")
 	if body.is_in_group('droppable'):
 		is_inside_droppable = true
-		body.modulate = Color(Color.REBECCA_PURPLE, 1)
-		#print("change body ref")
 		body_ref = body
 
 func _on_area_2d_body_exited(body):
 	print("body ex")
 	if body.is_in_group('droppable'):
-		body.modulate = Color(Color.FOREST_GREEN, 1)
 		if body_ref == body:
 			is_inside_droppable = false
 			body_ref = null
+
+func _on_mask_played(mask : Node) -> void:
+	if mask == self:
+		draggable = false
+	

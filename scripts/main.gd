@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var board = $Board
+@onready var game_manager = $GameManager
 
 func _ready():
 	pass

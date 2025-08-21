@@ -17,9 +17,7 @@ enum Dir { TOP, RIGHT, BOTTOM, LEFT }
 var cells: Array = []  # Array<Array<Cell>>
 
 func _ready() -> void:
-	EventBus.mask_drop_attempt.connect(_on_mask_drop_attempt)
 	_init_cells_grid()
-	init_hands()
 
 func _init_cells_grid() -> void:
 	cells.clear()
@@ -68,42 +66,19 @@ func init_hands() -> void:
 func in_bounds(p: Vector2i) -> bool:
 	return p.x >= 0 and p.x < W and p.y >= 0 and p.y < H
 
-func get_cell(p: Vector2i) -> Cell:
-	if not in_bounds(p):
+func get_cell(query: Vector2i) -> Cell:
+	if not in_bounds(query):
 		return null
-	var c = cells[p.y][p.x]
+	var c = cells[query.y][query.x]
 	return c if c is Cell else null
 
 
-func failed_drop(mask : Node) -> bool:
-	print("failed drop")
-	if mask and mask.has_method('return_home'):
-		mask.return_home()
-	return false
-
-# Appelé quand un Mask est lâché sur une Cell
-func request_place(mask_node : Node, target: Cell, state_id: String, owner_origin: String) -> bool:
-	if target == null:
-		return failed_drop(mask_node)
-	if not target.is_empty():
-		return failed_drop(mask_node)
-	var st: MaskState = MaskDB.get_state(state_id)
-	print("test3")
-	if st == null:
-		return failed_drop(mask_node)
-	print("test4")
-	# Place
-	target.set_occupant(owner_origin, state_id)
-	print("test5")
-	# Captures TT
-	_resolve_captures(target)
-	print("test6")
-	return true
-
 func _resolve_captures(center: Cell) -> void:
 	var p: Vector2i = center.grid_pos
-	var st_new: MaskState = MaskDB.get_state(center.occupant_state_id)
-	if st_new == null: return
+	var state_new: MaskState = MaskDB.get_state(center.occupant_state_id)
+	if state_new == null:
+		print_debug("new cell state not found")
+		return
 
 	# (voisin, direction_du_nouveau_vers_voisin, direction_opposée_du_voisin)
 	var checks: Array = [
@@ -114,18 +89,22 @@ func _resolve_captures(center: Cell) -> void:
 	]
 
 	for item in checks:
-		var q: Vector2i = item["q"]
-		if not in_bounds(q): continue
-		var nei: Cell = get_cell(q)
-		if nei == null: continue
-		if nei.is_empty(): continue
+		var query: Vector2i = item["q"]
+		if not in_bounds(query):
+			continue
+		var cell: Cell = get_cell(query)
+		if cell == null:
+			continue
+		if cell.is_empty():
+			continue
 		# Compare faces
-		var st_nei: MaskState = MaskDB.get_state(nei.occupant_state_id)
-		if st_nei == null: continue
-		var v_new: int = _value_on(st_new, int(item["d_new"]))
-		var v_nei: int = _value_on(st_nei, int(item["d_nei"]))
+		var cell_state : MaskState = MaskDB.get_state(cell.occupant_state_id)
+		if cell_state == null:
+			continue
+		var v_new: int = _value_on(state_new, int(item["d_new"]))
+		var v_nei: int = _value_on(cell_state, int(item["d_nei"]))
 		if v_new > v_nei:
-			nei.owner_current = center.owner_current  # flip (seule la cell change d’owner)
+			cell.set_new_owner(center.owner_current)  # flip (seule la cell change d’owner)
 
 func _value_on(st: MaskState, dir: int) -> int:
 	match dir:
@@ -134,10 +113,3 @@ func _value_on(st: MaskState, dir: int) -> int:
 		Dir.BOTTOM: return st.val_bottom()
 		Dir.LEFT:   return st.val_left()
 	return 0
-
-func _on_mask_drop_attempt(target_cell: Cell, mask_node: Node, state_id: String, owner_origin: String) -> void:
-	print("drop att")
-	if request_place(mask_node, target_cell, state_id, owner_origin):
-		print("req place")
-		# Snap visuel : centre la carte sur la cell
-		mask_node.global_position = target_cell.global_position

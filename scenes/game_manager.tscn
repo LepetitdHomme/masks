@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://e0q05851sgxj"]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_m516k"]
+[ext_resource type="PackedScene" uid="uid://ciw7ui5j5fph3" path="res://scenes/board.tscn" id="2_2uvkl"]
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource("1_m516k")
+
+[node name="Board" parent="." instance=ExtResource("2_2uvkl")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -328.0
+offset_right = 19.0
+offset_bottom = -305.0
+text = "P1 to play"

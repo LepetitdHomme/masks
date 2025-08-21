@@ -1,27 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://ciw7ui5j5fph3"]
+[gd_scene load_steps=5 format=3 uid="uid://ciw7ui5j5fph3"]
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_svyxg"]
+[ext_resource type="Texture2D" uid="uid://cqw4iqa0jj5dt" path="res://assets/board.png" id="2_kf3ja"]
 [ext_resource type="PackedScene" uid="uid://b1tdlb6sp1n04" path="res://scenes/Cell.tscn" id="2_lmlhn"]
 [ext_resource type="PackedScene" uid="uid://jvqq4arjjw3d" path="res://scenes/hand.tscn" id="3_junrt"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_svyxg")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4, 14)
+scale = Vector2(0.936523, 0.928467)
+texture = ExtResource("2_kf3ja")
+
 [node name="grid" type="Node2D" parent="."]
 
 [node name="Cell" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(-199, -212)
+position = Vector2(-222, -214)
 
 [node name="Cell2" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(0, -212)
+position = Vector2(-2, -216)
 grid_pos = Vector2i(1, 0)
 
 [node name="Cell3" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(201, -214)
+position = Vector2(216, -216)
 grid_pos = Vector2i(2, 0)
 
 [node name="Cell4" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(-199, -3)
+position = Vector2(-224, -2)
 grid_pos = Vector2i(0, 1)
 
 [node name="Cell5" parent="grid" instance=ExtResource("2_lmlhn")]
@@ -29,19 +35,19 @@ position = Vector2(1, 0)
 grid_pos = Vector2i(1, 1)
 
 [node name="Cell6" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(206, 1)
+position = Vector2(216, 0)
 grid_pos = Vector2i(2, 1)
 
 [node name="Cell7" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(-199, 221)
+position = Vector2(-224, 211)
 grid_pos = Vector2i(0, 2)
 
 [node name="Cell8" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(3, 222)
+position = Vector2(-1, 212)
 grid_pos = Vector2i(1, 2)
 
 [node name="Cell9" parent="grid" instance=ExtResource("2_lmlhn")]
-position = Vector2(208, 225)
+position = Vector2(219, 213)
 grid_pos = Vector2i(2, 2)
 
 [node name="HandP1" type="Node2D" parent="."]
