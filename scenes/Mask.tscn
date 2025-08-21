@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://4u84dlakk0qs"]
+
+[ext_resource type="Script" path="res://scripts/mask.gd" id="1_kljkp"]
+[ext_resource type="Resource" uid="uid://c3yaue3oly0bu" path="res://masks/first_mask.tres" id="2_5iuop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhnmm"]
+size = Vector2(139.368, 138.181)
+
+[node name="Mask" type="Node2D"]
+script = ExtResource("1_kljkp")
+def = ExtResource("2_5iuop")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+region_rect = Rect2(129.903, 119.261, 289.892, 355.776)
+
+[node name="shadow" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0, 0, 0, 0.392157)
+self_modulate = Color(0, 0, 0, 0.392157)
+show_behind_parent = true
+region_rect = Rect2(142.098, 128.772, 263.538, 327.226)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_bhnmm")
+
+[node name="Labels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -57.0
+offset_right = 56.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = -11.0
+offset_right = 86.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "1"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 42.0
+offset_right = 125.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "2"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 100.0
+offset_right = 80.0
+offset_bottom = 123.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "3"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 44.0
+offset_right = 34.0
+offset_bottom = 67.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "4"
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(97, 97)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control" to="." method="_on_mouse_exited"]

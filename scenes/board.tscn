@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciw7ui5j5fph3"]
+
+[ext_resource type="Script" path="res://scripts/board.gd" id="1_svyxg"]
+[ext_resource type="PackedScene" uid="uid://b1tdlb6sp1n04" path="res://scenes/Cell.tscn" id="2_lmlhn"]
+[ext_resource type="PackedScene" uid="uid://jvqq4arjjw3d" path="res://scenes/hand.tscn" id="3_junrt"]
+
+[node name="Board" type="Node2D"]
+script = ExtResource("1_svyxg")
+
+[node name="grid" type="Node2D" parent="."]
+
+[node name="Cell" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(-199, -212)
+
+[node name="Cell2" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(0, -212)
+grid_pos = Vector2i(1, 0)
+
+[node name="Cell3" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(201, -214)
+grid_pos = Vector2i(2, 0)
+
+[node name="Cell4" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(-199, -3)
+grid_pos = Vector2i(0, 1)
+
+[node name="Cell5" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(1, 0)
+grid_pos = Vector2i(1, 1)
+
+[node name="Cell6" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(206, 1)
+grid_pos = Vector2i(2, 1)
+
+[node name="Cell7" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(-199, 221)
+grid_pos = Vector2i(0, 2)
+
+[node name="Cell8" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(3, 222)
+grid_pos = Vector2i(1, 2)
+
+[node name="Cell9" parent="grid" instance=ExtResource("2_lmlhn")]
+position = Vector2(208, 225)
+grid_pos = Vector2i(2, 2)
+
+[node name="HandP1" type="Node2D" parent="."]
+position = Vector2(-446, -356)
+
+[node name="Hand" parent="HandP1" instance=ExtResource("3_junrt")]
+
+[node name="HandP2" type="Node2D" parent="."]
+position = Vector2(313, -352)
+
+[node name="Hand" parent="HandP2" instance=ExtResource("3_junrt")]

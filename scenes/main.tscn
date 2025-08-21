@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl5qdu55uy418"]
+
+[ext_resource type="PackedScene" uid="uid://ciw7ui5j5fph3" path="res://scenes/board.tscn" id="1_2rc7v"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_yub6s"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_yub6s")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1200, 1200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -249.0
+offset_top = -283.0
+offset_right = 951.0
+offset_bottom = 917.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.68152, 0.743709, 0.539993, 1)
+
+[node name="Board" parent="." instance=ExtResource("1_2rc7v")]
+position = Vector2(358, 359)
+scale = Vector2(0.8, 0.8)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(359, 357)
+zoom = Vector2(0.7, 0.7)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.321728, 0.321728, 0.321728, 1)

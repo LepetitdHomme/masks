@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://jvqq4arjjw3d"]
+
+[ext_resource type="Script" path="res://scripts/hand.gd" id="1_khv8h"]
+[ext_resource type="PackedScene" uid="uid://b1tdlb6sp1n04" path="res://scenes/Cell.tscn" id="1_p3kuk"]
+
+[node name="Hand" type="Node2D"]
+script = ExtResource("1_khv8h")
+
+[node name="Cell" parent="." instance=ExtResource("1_p3kuk")]
+position = Vector2(64, 72)
+
+[node name="Cell2" parent="." instance=ExtResource("1_p3kuk")]
+position = Vector2(64, 216)
+
+[node name="Cell3" parent="." instance=ExtResource("1_p3kuk")]
+position = Vector2(64, 360)
+
+[node name="Cell4" parent="." instance=ExtResource("1_p3kuk")]
+position = Vector2(64, 504)
+
+[node name="Cell5" parent="." instance=ExtResource("1_p3kuk")]
+position = Vector2(64, 648)
