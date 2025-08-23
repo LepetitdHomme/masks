@@ -43,6 +43,7 @@ func request_place(mask_node : Node, target: Cell, state_id: String, owner_origi
 	target.set_occupant(owner_origin, state_id)
 	# Captures TT
 	board._resolve_captures(target)
+	EventBus.mask_placed.emit(owner_origin)
 	return true
 
 func _after_place() -> void:
@@ -55,6 +56,7 @@ func _after_place() -> void:
 		current_owner = "P1"
 	if placed_count >= 9:
 		_end_match()
+	EventBus.new_turn.emit(current_owner)
 
 func _end_match() -> void:
 	print_debug("MATCH ENDED !")

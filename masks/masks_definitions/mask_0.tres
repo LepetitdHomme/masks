@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MaskDef" load_steps=3 format=3 uid="uid://c3yaue3oly0bu"]
+
+[ext_resource type="Texture2D" uid="uid://b3udb61h3dsp1" path="res://assets/masks_sprites/mask_0.png" id="1_45eil"]
+[ext_resource type="Script" path="res://masks/MaskDef.gd" id="2_qlwpj"]
+
+[resource]
+script = ExtResource("2_qlwpj")
+mask_id = "0"
+display_name = "fire_mask"
+art_texture = ExtResource("1_45eil")
+tint_color = Color(1, 1, 1, 1)
+base_top = 1
+base_right = 4
+base_bottom = 1
+base_left = 3

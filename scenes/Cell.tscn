@@ -6,15 +6,15 @@
 size = Vector2(63, 66)
 
 [node name="Cell" type="StaticBody2D" groups=["droppable"]]
+scale = Vector2(0.9, 0.9)
 script = ExtResource("1_t7fdt")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(128, 128)
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
-color = Color(0.133333, 0.545098, 0.133333, 1)
+offset_left = -68.0
+offset_top = -33.0
+offset_right = 69.0
+offset_bottom = 34.0
+color = Color(0.133333, 0.545098, 0.133333, 0.482353)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0)

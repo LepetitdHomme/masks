@@ -9,6 +9,8 @@ const H: int = 3
 
 @export var cell_size: Vector2 = Vector2(128, 128)
 @export var origin: Vector2 = Vector2.ZERO
+const MASKS_DIR := "res://masks/masks_definitions"
+var masks: Array[MaskDef] = []
 
 var hand_scene = preload("res://scenes/hand.tscn")
 
@@ -17,6 +19,11 @@ enum Dir { TOP, RIGHT, BOTTOM, LEFT }
 var cells: Array = []  # Array<Array<Cell>>
 
 func _ready() -> void:
+	for f in DirAccess.get_files_at(MASKS_DIR):
+		if f.ends_with(".tres"):
+			var m := ResourceLoader.load(MASKS_DIR + "/" + f) as MaskDef
+			if m:
+				masks.append(m)
 	_init_cells_grid()
 
 func _init_cells_grid() -> void:
@@ -41,23 +48,26 @@ func _init_cells_grid() -> void:
 		for x in range(W):
 			assert(cells[y][x] is Cell, "Case manquante à (%d,%d)" % [x, y])
 
+func pick_random_mask() -> MaskDef:
+	return masks.pick_random()
+
 func init_hands() -> void:
 	# pour le POC : créer des MaskState en dur
-	var fire_def = load("res://masks/first_mask.tres") as MaskDef
+
 
 	var p1_states: Array[String] = [
-		MaskDB.add_from_def(fire_def, "P1").id,
-		MaskDB.add_from_def(fire_def,  "P1").id,
-		MaskDB.add_from_def(fire_def,  "P1").id,
-		MaskDB.add_from_def(fire_def,  "P1").id,
-		MaskDB.add_from_def(fire_def,  "P1").id,
+		MaskDB.add_from_def(pick_random_mask(), "P1").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P1").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P1").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P1").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P1").id,
 	]
 	var p2_states: Array[String] = [
-		MaskDB.add_from_def(fire_def, "P2").id,
-		MaskDB.add_from_def(fire_def,  "P2").id,
-		MaskDB.add_from_def(fire_def,  "P2").id,
-		MaskDB.add_from_def(fire_def,  "P2").id,
-		MaskDB.add_from_def(fire_def,  "P2").id,
+		MaskDB.add_from_def(pick_random_mask(), "P2").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P2").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P2").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P2").id,
+		MaskDB.add_from_def(pick_random_mask(),  "P2").id,
 	]
 
 	hand_p1.spawn_from_states(p1_states)

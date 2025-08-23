@@ -18,6 +18,21 @@ var is_inside_droppable : bool = false
 var home_tween : Tween
 var home_pos : Vector2 # used to return back to last position if drop not allowed
 var body_ref
+
+
+# --- OVERLAY CONFIG ---
+const MAX_VAL: int = 10              # on clamp 0..10
+const FAN_DEG: float = 40.0          # ouverture de l’éventail par côté
+const INNER_R: float = 70.0          # rayon de départ des piques (depuis le centre du masque)
+const SPIKE_LEN: float = 110.0        # longueur des piques
+const SPIKE_BASE: float = 15.0        # largeur de base d’un triangle
+const COLOR_N: Color = Color.FIREBRICK#(0.35, 0.8, 1.0, 0.9)   # Nord
+const COLOR_E: Color = Color.FIREBRICK#(1.0, 0.55, 0.2, 0.9)   # Est
+const COLOR_S: Color = Color.FIREBRICK#(0.9, 0.2, 0.4, 0.9)    # Sud
+const COLOR_W: Color = Color.FIREBRICK#(0.6, 1.0, 0.4, 0.9)    # Ouest
+
+
+
 # temporary labels for values (get vals from state)
 @onready var label = $Labels/Label
 @onready var label_2 = $Labels/Label2
@@ -33,6 +48,50 @@ func _ready():
 
 func _process(delta):
 	drag_logic(delta)
+
+
+func _draw() -> void:
+	var st := MaskDB.get_state(state_id)
+	if st == null: 
+		return
+	# NOTE: ton Sprite2D est centré → le (0,0) de ce Node2D est le centre visuel
+	_draw_side(st.val_top(),    deg_to_rad(-90.0), COLOR_N)
+	_draw_side(st.val_right(),  deg_to_rad(  0.0), COLOR_E)
+	_draw_side(st.val_bottom(), deg_to_rad( 90.0), COLOR_S)
+	_draw_side(st.val_left(),   deg_to_rad(180.0), COLOR_W)
+
+func _draw_side(val: int, dir_angle: float, col: Color) -> void:
+	val = clamp(val, 0, MAX_VAL)
+	if val <= 0: 
+		return
+
+	# éventail : de -FAN/2 à +FAN/2 autour de l’angle de la direction
+	var half_fan := deg_to_rad(FAN_DEG) * 0.5
+	var count := val
+	for i in range(count):
+		var t := 0.0
+		if count > 1:
+			t = float(i) / float(count - 1)  # 0..1
+			t = (t - 0.5) * 2.0              # -1..+1
+		# angle per-spike dans l’éventail
+		var a := dir_angle + t * half_fan
+
+		# base & pointe du triangle
+		var dir := Vector2.RIGHT.rotated(a)                   # vecteur direction
+		var ortho := dir.rotated(PI * 0.5).normalized()       # perpendiculaire
+
+		var base_center := dir * INNER_R
+		var p0 := base_center + ortho * (SPIKE_BASE * 0.5)
+		var p1 := base_center - ortho * (SPIKE_BASE * 0.5)
+		var tip := dir * (INNER_R + SPIKE_LEN)
+
+		# (option) léger dégradé alpha selon distance au centre de l’éventail
+		var fade = 1.0 - 0.25 * abs(t)
+		var c := Color(col.r, col.g, col.b, col.a * fade)
+
+		draw_colored_polygon(PackedVector2Array([p0, p1, tip]), c)
+
+
 
 func set_home_pos(p : Vector2) -> void:
 	home_pos = p
@@ -51,6 +110,7 @@ func bind(def_in : MaskDef, state_id_in : String, ownr) -> void:
 	#get_state().apply_bonus("right", 3)
 	_refresh_visual()
 	update_labels()
+	queue_redraw()
 
 func update_labels() -> void:
 	var st: MaskState = MaskDB.get_state(state_id)
@@ -108,7 +168,8 @@ func drag_logic(delta: float) -> void:
 	if is_dragging and Input.is_action_just_released("click"):
 		is_dragging = false
 		_change_scale(Vector2(1.0, 1.0))
-		sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, 0.0, 22.0 * delta)
+		sprite_2d.rotation_degrees = 0.0
+		#sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, 0.0, 22.0 * delta)
 		sprite_2d.z_index = 0
 
 		# Émettre l’event SEULEMENT si on est bien sur une Cell droppable

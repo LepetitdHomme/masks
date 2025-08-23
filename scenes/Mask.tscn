@@ -1,12 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://4u84dlakk0qs"]
 
 [ext_resource type="Script" path="res://scripts/mask.gd" id="1_kljkp"]
-[ext_resource type="Resource" uid="uid://c3yaue3oly0bu" path="res://masks/first_mask.tres" id="2_5iuop"]
+[ext_resource type="Resource" uid="uid://c3yaue3oly0bu" path="res://masks/masks_definitions/mask_0.tres" id="2_5iuop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhnmm"]
 size = Vector2(139.368, 138.181)
 
 [node name="Mask" type="Node2D"]
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_kljkp")
 def = ExtResource("2_5iuop")
 
@@ -25,26 +26,27 @@ region_rect = Rect2(142.098, 128.772, 263.538, 327.226)
 shape = SubResource("RectangleShape2D_bhnmm")
 
 [node name="Labels" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -59.0
-offset_top = -57.0
-offset_right = 56.0
-offset_bottom = 56.0
+offset_left = -70.0
+offset_top = -69.0
+offset_right = 70.0
+offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 35.0
-offset_top = -11.0
-offset_right = 86.0
-offset_bottom = 12.0
+offset_left = 43.75
+offset_top = -26.0
+offset_right = 94.75
+offset_bottom = 5.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 22
 text = "1"
@@ -52,10 +54,10 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 42.0
-offset_right = 125.0
-offset_bottom = 70.0
+offset_left = 113.75
+offset_top = 46.5
+offset_right = 153.75
+offset_bottom = 74.5
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "2"
@@ -63,10 +65,10 @@ horizontal_alignment = 2
 
 [node name="Label3" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 100.0
-offset_right = 80.0
-offset_bottom = 123.0
+offset_left = 50.0
+offset_top = 130.25
+offset_right = 90.0
+offset_bottom = 158.25
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "3"
@@ -74,10 +76,10 @@ horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = -6.0
-offset_top = 44.0
-offset_right = 34.0
-offset_bottom = 67.0
+offset_left = -13.75
+offset_top = 50.25
+offset_right = 26.25
+offset_bottom = 78.25
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "4"
@@ -96,6 +98,8 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

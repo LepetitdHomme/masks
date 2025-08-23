@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b1tdlb6sp1n04" path="res://scenes/Cell.tscn" id="1_p3kuk"]
 
 [node name="Hand" type="Node2D"]
+scale = Vector2(0.7, 0.7)
 script = ExtResource("1_khv8h")
 
 [node name="Cell" parent="." instance=ExtResource("1_p3kuk")]

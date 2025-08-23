@@ -4,8 +4,8 @@ class_name Cell
 @export var grid_pos: Vector2i = Vector2i(0, 0)
 @onready var color_rect = $ColorRect
 
-var color_p1 : Color = Color.BLUE
-var color_p2 : Color = Color.RED
+var color_p1 : Color = Color.ORANGE
+var color_p2 : Color = Color.BLUE
 
 var owner_origin: String = ""
 var owner_current: String = ""          # "P1" / "P2" / ""
