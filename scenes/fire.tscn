@@ -1,41 +1,17 @@
-[gd_scene load_steps=29 format=3 uid="uid://cwx4a4a3fctl1"]
+[gd_scene load_steps=21 format=3 uid="uid://cwx4a4a3fctl1"]
 
-[ext_resource type="Texture2D" uid="uid://b86486btlihfa" path="res://assets/fires/blue/burning_loop_1.png" id="1_grpad"]
 [ext_resource type="Script" path="res://scripts/fire.gd" id="1_sqobo"]
 [ext_resource type="Texture2D" uid="uid://f8llufg6aa7b" path="res://assets/fires/orange/burning_loop_1.png" id="2_3j5eo"]
 [ext_resource type="Texture2D" uid="uid://cpmexk36dvbqj" path="res://assets/fires/orange/burning_end_4.png" id="4_q34qo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8avmq"]
-atlas = ExtResource("1_grpad")
-region = Rect2(0, 0, 24, 32)
+[sub_resource type="Gradient" id="Gradient_qf6na"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nam6s"]
-atlas = ExtResource("1_grpad")
-region = Rect2(24, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nn4e3"]
-atlas = ExtResource("1_grpad")
-region = Rect2(48, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aun54"]
-atlas = ExtResource("1_grpad")
-region = Rect2(72, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a7r7e"]
-atlas = ExtResource("1_grpad")
-region = Rect2(96, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x6swk"]
-atlas = ExtResource("1_grpad")
-region = Rect2(120, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_afskh"]
-atlas = ExtResource("1_grpad")
-region = Rect2(144, 0, 24, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_32qg4"]
-atlas = ExtResource("1_grpad")
-region = Rect2(168, 0, 24, 32)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_46oqo"]
+gradient = SubResource("Gradient_qf6na")
+fill = 1
+fill_from = Vector2(0.490826, 0.509174)
+fill_to = Vector2(0.114679, 0.123853)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3kv1v"]
 atlas = ExtResource("2_3j5eo")
@@ -69,62 +45,8 @@ region = Rect2(144, 0, 24, 32)
 atlas = ExtResource("2_3j5eo")
 region = Rect2(168, 0, 24, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jbnqu"]
-atlas = ExtResource("4_q34qo")
-region = Rect2(0, 0, 10, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pgd2w"]
-atlas = ExtResource("4_q34qo")
-region = Rect2(10, 0, 10, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_82223"]
-atlas = ExtResource("4_q34qo")
-region = Rect2(20, 0, 10, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_50mgc"]
-atlas = ExtResource("4_q34qo")
-region = Rect2(30, 0, 10, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8sl8e"]
-atlas = ExtResource("4_q34qo")
-region = Rect2(40, 0, 10, 20)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_geht4"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8avmq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nam6s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nn4e3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aun54")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a7r7e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x6swk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_afskh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_32qg4")
-}],
-"loop": true,
-"name": &"blue_0",
-"speed": 11.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3kv1v")
@@ -153,50 +75,79 @@ animations = [{
 "loop": true,
 "name": &"orange_0",
 "speed": 11.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v5om"]
+atlas = ExtResource("4_q34qo")
+region = Rect2(0, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsd4t"]
+atlas = ExtResource("4_q34qo")
+region = Rect2(10, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frxpe"]
+atlas = ExtResource("4_q34qo")
+region = Rect2(20, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8j4rh"]
+atlas = ExtResource("4_q34qo")
+region = Rect2(30, 0, 10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tg7i"]
+atlas = ExtResource("4_q34qo")
+region = Rect2(40, 0, 10, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tssm6"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jbnqu")
+"texture": SubResource("AtlasTexture_3v5om")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pgd2w")
+"texture": SubResource("AtlasTexture_tsd4t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_82223")
+"texture": SubResource("AtlasTexture_frxpe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_50mgc")
+"texture": SubResource("AtlasTexture_8j4rh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8sl8e")
+"texture": SubResource("AtlasTexture_7tg7i")
 }],
-"loop": true,
+"loop": false,
 "name": &"orange_burst",
-"speed": 10.0
+"speed": 11.0
 }]
-
-[sub_resource type="Gradient" id="Gradient_qf6na"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_46oqo"]
-gradient = SubResource("Gradient_qf6na")
-fill = 1
-fill_from = Vector2(0.490826, 0.509174)
-fill_to = Vector2(0.114679, 0.123853)
 
 [node name="Fire" type="Node2D"]
 script = ExtResource("1_sqobo")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -16)
-sprite_frames = SubResource("SpriteFrames_geht4")
-animation = &"orange_burst"
-autoplay = "orange_0"
-frame_progress = 0.816481
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-7.62939e-06, -0.999998)
 scale = Vector2(4.40625, 3.09375)
-color = Color(0.196078, 0.372549, 0.796078, 1)
+color = Color(0.576193, 0.340054, 0.189364, 1)
 energy = 3.59
 texture = SubResource("GradientTexture2D_46oqo")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="defaut_animation" type="AnimatedSprite2D" parent="Node2D"]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_geht4")
+animation = &"orange_0"
+autoplay = "orange_0"
+
+[node name="burst_animation" type="AnimatedSprite2D" parent="Node2D"]
+visible = false
+position = Vector2(-5.96046e-08, -19)
+scale = Vector2(2.6, 1.925)
+sprite_frames = SubResource("SpriteFrames_tssm6")
+animation = &"orange_burst"
+frame = 4
+frame_progress = 1.0

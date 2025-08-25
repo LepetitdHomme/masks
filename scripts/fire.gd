@@ -1,7 +1,8 @@
 extends Node2D
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var point_light_2d = $PointLight2D
+@onready var defaut_animation = $Node2D/defaut_animation
+@onready var burst_animation = $Node2D/burst_animation
 
 var tween : Tween = null
 var base_energy : float = 2.5
@@ -14,6 +15,9 @@ var color_p2 : Color = Color(0.196, 0.373, 0.796)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	defaut_animation.play("orange_0")
+	burst_animation.visible = false
+	burst_animation.connect("animation_finished", _play_default_animation)
 	point_light_2d.energy = base_energy
 	EventBus.new_turn.connect(_on_new_turn)
 	EventBus.mask_placed.connect(_on_mask_placed)
@@ -25,14 +29,23 @@ func _process(delta):
 
 
 func _on_new_turn(ownr : String) -> void:
-	if ownr == "P1":
-		animated_sprite_2d.play("orange_0")
-		point_light_2d.color = color_p1
-	else:
-		animated_sprite_2d.play("blue_0")
-		point_light_2d.color = color_p2
+	pass
+
+
+func _play_default_animation():
+	#defaut_animation.visible = true
+	burst_animation.visible = false
+	#defaut_animation.play("orange_0")
+
+func _play_burst():
+	burst_animation.visible = true
+	#defaut_animation.visible = false
+	burst_animation.play("orange_burst")
 
 func _on_mask_placed(ownr : String) -> void:
+	# PLAY BURST OF FIRE
+	_play_burst()
+	# PLAY BURST OF LIGHT
 	if tween:
 		tween.kill()
  # (optionnel) réinitialise au niveau de base
