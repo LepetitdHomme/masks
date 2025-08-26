@@ -115,6 +115,7 @@ func _resolve_captures(center: Cell) -> void:
 		var v_nei: int = _value_on(cell_state, int(item["d_nei"]))
 		if v_new > v_nei:
 			cell.set_new_owner(center.owner_current)  # flip (seule la cell change d’owner)
+			cell.current_mask_node.do_a_flip()
 
 func _value_on(st: MaskState, dir: int) -> int:
 	match dir:

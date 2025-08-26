@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var sprite_2d = $Sprite2D
 @onready var shadow = $Sprite2D/shadow
+@onready var animation_player : AnimationPlayer = $AnimationPlayer
 
 @export var def : MaskDef # data
 var state_id : String = "" # instance runtime
@@ -202,6 +203,9 @@ func _change_scale(desired_scale : Vector2):
 	scale_tween.tween_property(sprite_2d, "scale", desired_scale, 0.125)
 	
 	current_goal_scale = desired_scale
+
+func do_a_flip():
+	animation_player.play("flip")
 
 func _set_rotation(delta : float) -> void:
 	var desired_rotation : float = clamp((global_position - last_pos).x * 0.85, -max_card_rotation, max_card_rotation)

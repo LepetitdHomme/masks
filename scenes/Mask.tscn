@@ -1,10 +1,72 @@
-[gd_scene load_steps=4 format=3 uid="uid://4u84dlakk0qs"]
+[gd_scene load_steps=8 format=3 uid="uid://4u84dlakk0qs"]
 
 [ext_resource type="Script" path="res://scripts/mask.gd" id="1_kljkp"]
 [ext_resource type="Resource" uid="uid://c3yaue3oly0bu" path="res://masks/masks_definitions/mask_0.tres" id="2_5iuop"]
+[ext_resource type="Texture2D" uid="uid://b3udb61h3dsp1" path="res://assets/masks_sprites/mask_0.png" id="3_yheqr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhnmm"]
 size = Vector2(139.368, 138.181)
+
+[sub_resource type="Animation" id="Animation_e814d"]
+resource_name = "flip"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.139577, 0.270827),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0696021, 0.142353, 0.203814, 0.269439),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5708, 3.14159, 4.71239, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_yvocw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ph6ur"]
+_data = {
+"RESET": SubResource("Animation_yvocw"),
+"flip": SubResource("Animation_e814d")
+}
 
 [node name="Mask" type="Node2D"]
 scale = Vector2(0.8, 0.8)
@@ -12,6 +74,7 @@ script = ExtResource("1_kljkp")
 def = ExtResource("2_5iuop")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_yheqr")
 region_rect = Rect2(129.903, 119.261, 289.892, 355.776)
 
 [node name="shadow" type="Sprite2D" parent="Sprite2D"]
@@ -100,6 +163,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ph6ur")
+}
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

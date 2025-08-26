@@ -40,7 +40,7 @@ func request_place(mask_node : Node, target: Cell, state_id: String, owner_origi
 	if st == null:
 		return failed_drop(mask_node, "state null/not found")
 	# Place
-	target.set_occupant(owner_origin, state_id)
+	target.set_occupant(owner_origin, mask_node, state_id)
 	# Captures TT
 	board._resolve_captures(target)
 	EventBus.mask_placed.emit(owner_origin)
