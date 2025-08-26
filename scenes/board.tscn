@@ -55,11 +55,11 @@ position = Vector2(181, 180)
 grid_pos = Vector2i(2, 2)
 
 [node name="HandP1" type="Node2D" parent="."]
-position = Vector2(-590, -250)
+position = Vector2(-589, -407)
 
 [node name="Hand" parent="HandP1" instance=ExtResource("3_junrt")]
 
 [node name="HandP2" type="Node2D" parent="."]
-position = Vector2(491, -251)
+position = Vector2(545, -405)
 
 [node name="Hand" parent="HandP2" instance=ExtResource("3_junrt")]

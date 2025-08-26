@@ -8,16 +8,16 @@ scale = Vector2(0.7, 0.7)
 script = ExtResource("1_khv8h")
 
 [node name="Cell" parent="." instance=ExtResource("1_p3kuk")]
-position = Vector2(64, 72)
+position = Vector2(34.2857, 34.2857)
 
 [node name="Cell2" parent="." instance=ExtResource("1_p3kuk")]
-position = Vector2(64, 216)
+position = Vector2(34.2857, 308.571)
 
 [node name="Cell3" parent="." instance=ExtResource("1_p3kuk")]
-position = Vector2(64, 360)
+position = Vector2(34.2857, 582.857)
 
 [node name="Cell4" parent="." instance=ExtResource("1_p3kuk")]
-position = Vector2(64, 504)
+position = Vector2(34.2857, 857.143)
 
 [node name="Cell5" parent="." instance=ExtResource("1_p3kuk")]
-position = Vector2(64, 648)
+position = Vector2(34.2857, 1131.43)

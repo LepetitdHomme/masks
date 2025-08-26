@@ -7,8 +7,6 @@
 script = ExtResource("1_m516k")
 
 [node name="Board" parent="." instance=ExtResource("2_2uvkl")]
-cell_size = Vector2(128, 128)
-origin = Vector2(0, 0)
 
 [node name="Label" type="Label" parent="."]
 offset_left = -21.0

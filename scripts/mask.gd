@@ -3,8 +3,13 @@ extends Node2D
 @onready var sprite_2d = $Sprite2D
 @onready var shadow = $Sprite2D/shadow
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
+@onready var color_rect = $ColorRect
 
 @export var def : MaskDef # data
+
+const custom_scale = Vector2(0.8, 0.8)
+const grab_scale = Vector2(1.0, 1.0)
+
 var state_id : String = "" # instance runtime
 var ownr_origin : String = "" # "P1" / "P2" from state
 
@@ -25,12 +30,12 @@ var body_ref
 const MAX_VAL: int = 10              # on clamp 0..10
 const FAN_DEG: float = 40.0          # ouverture de l’éventail par côté
 const INNER_R: float = 70.0          # rayon de départ des piques (depuis le centre du masque)
-const SPIKE_LEN: float = 110.0        # longueur des piques
-const SPIKE_BASE: float = 15.0        # largeur de base d’un triangle
-const COLOR_N: Color = Color.FIREBRICK#(0.35, 0.8, 1.0, 0.9)   # Nord
-const COLOR_E: Color = Color.FIREBRICK#(1.0, 0.55, 0.2, 0.9)   # Est
-const COLOR_S: Color = Color.FIREBRICK#(0.9, 0.2, 0.4, 0.9)    # Sud
-const COLOR_W: Color = Color.FIREBRICK#(0.6, 1.0, 0.4, 0.9)    # Ouest
+const SPIKE_LEN: float = 80.0        # longueur des piques
+const SPIKE_BASE: float = 25.0        # largeur de base d’un triangle
+const COLOR_N: Color = Color.INDIAN_RED#(0.35, 0.8, 1.0, 0.9)   # Nord
+const COLOR_E: Color = Color.INDIAN_RED#(1.0, 0.55, 0.2, 0.9)   # Est
+const COLOR_S: Color = Color.INDIAN_RED#(0.9, 0.2, 0.4, 0.9)    # Sud
+const COLOR_W: Color = Color.INDIAN_RED#(0.6, 1.0, 0.4, 0.9)    # Ouest
 
 
 
@@ -41,6 +46,7 @@ const COLOR_W: Color = Color.FIREBRICK#(0.6, 1.0, 0.4, 0.9)    # Ouest
 @onready var label_4 = $Labels/Label4
 
 func _ready():
+	scale = custom_scale
 	EventBus.mask_drop_success.connect(_on_mask_played)
 	if def:
 		sprite_2d.texture = def.art_texture
@@ -92,7 +98,11 @@ func _draw_side(val: int, dir_angle: float, col: Color) -> void:
 
 		draw_colored_polygon(PackedVector2Array([p0, p1, tip]), c)
 
-
+func toggle_color(ownr : String):
+	if ownr == "P1":
+		color_rect.color = Color.ORANGE_RED
+	else:
+		color_rect.color = Color.BLUE
 
 func set_home_pos(p : Vector2) -> void:
 	home_pos = p
@@ -107,6 +117,7 @@ func bind(def_in : MaskDef, state_id_in : String, ownr) -> void:
 	def = def_in
 	state_id = state_id_in
 	ownr_origin = ownr
+	toggle_color(ownr)
 	# TODO: temporary
 	#get_state().apply_bonus("right", 3)
 	_refresh_visual()
@@ -149,14 +160,13 @@ func get_vals() -> Dictionary:
 func drag_logic(delta: float) -> void:
 	if not draggable:
 		return
-	shadow.position = Vector2(-12, 12).rotated(sprite_2d.rotation)
 
 	# 1) Début du drag (edge)
 	if not is_dragging and mouse_in and Input.is_action_just_pressed("click"):
 		is_dragging = true
 		Mousebrain.node_being_dragged = self
 		sprite_2d.z_index = 100
-		_change_scale(Vector2(1.2, 1.2))
+		_change_scale(grab_scale)
 		# pas de return ici, on laisse bouger dès ce frame
 
 	# 2) Drag en cours
@@ -168,8 +178,8 @@ func drag_logic(delta: float) -> void:
 	# 3) Drop (edge)
 	if is_dragging and Input.is_action_just_released("click"):
 		is_dragging = false
-		_change_scale(Vector2(1.0, 1.0))
-		sprite_2d.rotation_degrees = 0.0
+		_change_scale(custom_scale)
+		self.rotation_degrees = 0.0
 		#sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, 0.0, 22.0 * delta)
 		sprite_2d.z_index = 0
 
@@ -185,8 +195,8 @@ func drag_logic(delta: float) -> void:
 
 	# 4) Idle (pas de drag)
 	sprite_2d.z_index = 0
-	_change_scale(Vector2(1.0, 1.0))
-	sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, 0.0, 22.0 * delta)
+	_change_scale(custom_scale)
+	self.rotation_degrees = lerp(sprite_2d.rotation_degrees, 0.0, 22.0 * delta)
 
 func _on_mouse_entered():
 	mouse_in = true
@@ -200,7 +210,7 @@ func _change_scale(desired_scale : Vector2):
 	if scale_tween:
 		scale_tween.kill()
 	scale_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	scale_tween.tween_property(sprite_2d, "scale", desired_scale, 0.125)
+	scale_tween.tween_property(self, "scale", desired_scale, 0.125)
 	
 	current_goal_scale = desired_scale
 
@@ -209,7 +219,7 @@ func do_a_flip():
 
 func _set_rotation(delta : float) -> void:
 	var desired_rotation : float = clamp((global_position - last_pos).x * 0.85, -max_card_rotation, max_card_rotation)
-	sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, desired_rotation, 12.0 * delta)
+	self.rotation_degrees = lerp(self.rotation_degrees, desired_rotation, 12.0 * delta)
 
 	last_pos = global_position
 
